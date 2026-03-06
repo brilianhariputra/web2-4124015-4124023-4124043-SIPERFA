@@ -21,5 +21,3 @@ Link route perkenalan:
 http://localhost/web2-4124015_brilianhariputra/public/brilian
 
 Route ini menampilkan halaman perkenalan diri menggunakan Laravel.
-
----
