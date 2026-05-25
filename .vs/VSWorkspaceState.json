@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\config",
+    "\\database",
+    "\\public",
+    "\\resources",
+    "\\routes",
+    "\\storage",
+    "\\tests"
+  ],
+  "SelectedNode": "\\config\\queue.php",
+  "PreviewInSolutionExplorer": false
+}
