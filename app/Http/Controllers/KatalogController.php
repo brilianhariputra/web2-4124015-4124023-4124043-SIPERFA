@@ -3,38 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KatalogController extends Controller
 {
     public function index()
     {
-        $produk = [
-            ['id'=>1,'nama'=>'Laptop','harga'=>8000000],
-            ['id'=>2,'nama'=>'Mouse','harga'=>150000],
-            ['id'=>3,'nama'=>'Keyboard','harga'=>300000],
-            ['id'=>4,'nama'=>'Monitor','harga'=>2000000],
-            ['id'=>5,'nama'=>'Flashdisk','harga'=>100000],
-        ];
-
-        return view('katalog.index', compact('produk'));
+        $fasilitas = DB::table('fasilitas')->get();
+        $ruangan   = DB::table('ruangan')->get();
+        return view('katalog.index', compact('fasilitas', 'ruangan'));
     }
 
     public function show($id)
     {
-        $produk = [
-            1 => ['nama'=>'Laptop','harga'=>8000000],
-            2 => ['nama'=>'Mouse','harga'=>150000],
-            3 => ['nama'=>'Keyboard','harga'=>300000],
-            4 => ['nama'=>'Monitor','harga'=>2000000],
-            5 => ['nama'=>'Flashdisk','harga'=>100000],
-        ];
+        $fasilitas = DB::table('fasilitas')->where('id', $id)->first();
 
-        if(isset($produk[$id])){
-            return view('katalog.show', [
-                'produk' => $produk[$id]
-            ]);
+        if ($fasilitas) {
+            return view('katalog.show', compact('fasilitas'));
         }
 
-        return "Produk tidak ditemukan";
+        return "Fasilitas tidak ditemukan";
     }
 }

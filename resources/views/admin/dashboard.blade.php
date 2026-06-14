@@ -35,6 +35,10 @@
                 class="nav-link hover:bg-slate-800 w-full p-4 rounded-xl text-left">
                 Data Fasilitas
             </button>
+            <button onclick="openTab(event,'ruangan')"
+                class="nav-link hover:bg-slate-800 w-full p-4 rounded-xl text-left">
+                Data Ruangan
+            </button>
         </nav>
         <a href="/logout"
             class="mt-auto bg-red-500 hover:bg-red-600 text-white p-4 rounded-xl text-center font-bold">
@@ -176,9 +180,8 @@
             </div>
         </div>
 
-        <!-- FASILITAS -->
+        <!-- DATA FASILITAS -->
         <div id="fasilitas" class="tab-content">
-
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-black text-slate-800">Daftar Fasilitas</h2>
                 <button onclick="bukaModalTambah()"
@@ -194,48 +197,60 @@
             @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    @forelse($fasilitas as $f)
-    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition">
-
-        <!-- GAMBAR -->
-        <div class="h-48 bg-slate-200 overflow-hidden">
-            @if($f->gambar)
-                <img src="{{ $f->gambar }}" alt="{{ $f->nama }}"
-                    class="w-full h-full object-cover hover:scale-105 transition duration-500">
-            @else
-                <div class="w-full h-full flex items-center justify-center text-slate-400">
-                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
+                @forelse($fasilitas as $f)
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition">
+                    <div class="h-48 bg-blue-50 flex items-center justify-center text-7xl">
+                        {{ $f->emoji ?? '📦' }}
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-black text-slate-800 text-xl">{{ $f->nama }}</h3>
+                                <p class="text-slate-400 mt-1 text-sm">{{ $f->lokasi }}</p>
+                                <p class="text-slate-500 mt-1 text-sm">{{ $f->deskripsi }}</p>
+                            </div>
+                            <button onclick="bukaModalEdit({{ $f->id }}, '{{ $f->nama }}', '{{ $f->lokasi }}')"
+                                class="text-blue-600 font-bold hover:underline text-sm">
+                                Edit
+                            </button>
+                        </div>
+                        <form action="/admin/fasilitas/hapus/{{ $f->id }}" method="POST" class="mt-4"
+                            onsubmit="return confirm('Hapus fasilitas ini?')">
+                            @csrf
+                            <button type="submit" class="text-red-400 text-sm hover:underline">Hapus</button>
+                        </form>
+                    </div>
                 </div>
-            @endif
-        </div>
-
-        <!-- INFO -->
-        <div class="p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="font-black text-slate-800 text-xl">{{ $f->nama }}</h3>
-                    <p class="text-slate-400 mt-1 text-sm">{{ $f->lokasi }}</p>
-                </div>
-                <button onclick="bukaModalEdit({{ $f->id }}, '{{ $f->nama }}', '{{ $f->lokasi }}', '{{ $f->gambar }}')"
-                    class="text-blue-600 font-bold hover:underline text-sm">
-                    Edit
-                </button>
+                @empty
+                <div class="col-span-3 text-center text-slate-400 py-10">Belum ada data fasilitas.</div>
+                @endforelse
             </div>
-            <form action="/admin/fasilitas/hapus/{{ $f->id }}" method="POST" class="mt-4"
-                onsubmit="return confirm('Hapus fasilitas ini?')">
-                @csrf
-                <button type="submit" class="text-red-400 text-sm hover:underline">Hapus</button>
-            </form>
         </div>
 
-    </div>
-    @empty
-    <div class="col-span-3 text-center text-slate-400 py-10">Belum ada data fasilitas.</div>
-    @endforelse
-</div>
+        <!-- DATA RUANGAN -->
+        <div id="ruangan" class="tab-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black text-slate-800">Daftar Ruangan</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @forelse($ruangan as $r)
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition">
+                    <div class="h-48 bg-blue-100 flex items-center justify-center text-7xl">
+                        {{ $r->emoji ?? '🏢' }}
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-black text-slate-800 text-xl">{{ $r->nama }}</h3>
+                        <p class="text-slate-400 mt-1 text-sm">📍 {{ $r->lokasi }}</p>
+                        <p class="text-slate-500 mt-1 text-sm">{{ $r->deskripsi }}</p>
+                        <p class="text-green-600 mt-1 text-sm">👥 {{ $r->kapasitas }} orang</p>
+                        <p class="text-orange-500 mt-1 text-sm">💰 Rp {{ number_format($r->tarif, 0, ',', '.') }}/jam</p>
+                    </div>
+                </div>
+                @empty
+                <div class="col-span-3 text-center text-slate-400 py-10">Belum ada data ruangan.</div>
+                @endforelse
+            </div>
+        </div>
 
     </main>
 </div>

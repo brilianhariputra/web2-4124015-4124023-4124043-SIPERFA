@@ -81,55 +81,107 @@
         </div>
 
         <!-- KATALOG -->
-        <div id="katalog" class="tab-content space-y-6">
+       <!-- KATALOG -->
+<div id="katalog" class="tab-content space-y-6">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Ruang Rapat Utama -->
-                <div class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition">
-                    <div class="h-44 bg-slate-200"></div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-slate-800 text-lg">Ruang Rapat Utama</h4>
-                        <p class="text-xs text-slate-400 mt-1">Gedung A, Lt. 2</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-blue-600 font-bold text-sm">Tersedia</span>
-                            <button onclick="bukaFormBooking('Ruang Rapat Utama')"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition">
-                                Booking
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Lab Multimedia -->
-                <div class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition">
-                    <div class="h-44 bg-slate-200"></div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-slate-800 text-lg">Lab Multimedia</h4>
-                        <p class="text-xs text-slate-400 mt-1">Gedung B, Lt. 1</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-amber-500 font-bold text-sm">Penuh</span>
-                            <button class="bg-slate-100 text-slate-400 px-4 py-2 rounded-xl text-xs font-bold cursor-not-allowed">
-                                Detail
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Lab Komputer A -->
-                <div class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition">
-                    <div class="h-44 bg-slate-200"></div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-slate-800 text-lg">Lab Komputer A</h4>
-                        <p class="text-xs text-slate-400 mt-1">Gedung C, Lt. 1</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-blue-600 font-bold text-sm">Tersedia</span>
-                            <button onclick="bukaFormBooking('Lab Komputer A')"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition">
-                                Booking
-                            </button>
-                        </div>
-                    </div>
+    {{-- RUANGAN --}}
+    <h3 class="text-lg font-bold text-slate-700">🏫 Ruangan</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @forelse ($ruangan as $item)
+        <div class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition">
+            <div class="h-44 bg-blue-100 flex items-center justify-center text-6xl">
+                {{ $item->emoji }}
+            </div>
+            <div class="p-6">
+                <h4 class="font-bold text-slate-800 text-lg">{{ $item->nama }}</h4>
+                <p class="text-xs text-slate-400 mt-1">📍 {{ $item->lokasi }}</p>
+                <p class="text-xs text-green-600 mt-1">👥 {{ $item->kapasitas }} orang</p>
+                <p class="text-xs text-orange-500 mt-1">💰 Rp {{ number_format($item->tarif, 0, ',', '.') }}/jam</p>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-blue-600 font-bold text-sm">Tersedia</span>
+                    <button onclick="bukaFormBooking('{{ $item->nama }}')"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition">
+                        Booking
+                    </button>
                 </div>
             </div>
+        </div>
+        @empty
+        <p class="text-slate-400 col-span-3">Belum ada ruangan tersedia.</p>
+        @endforelse
+    </div>
 
+    {{-- FASILITAS --}}
+    <h3 class="text-lg font-bold text-slate-700 mt-8">🎒 Fasilitas & Peralatan</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @forelse ($fasilitas as $item)
+        <div class="bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition">
+            <div class="h-44 bg-yellow-100 flex items-center justify-center text-6xl">
+                {{ $item->emoji }}
+            </div>
+            <div class="p-6">
+                <h4 class="font-bold text-slate-800 text-lg">{{ $item->nama }}</h4>
+                <p class="text-xs text-slate-400 mt-1">📍 {{ $item->lokasi }}</p>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-blue-600 font-bold text-sm">Tersedia</span>
+                    <button onclick="bukaFormBooking('{{ $item->nama }}')"
+                        class="bg-yellow-500 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-yellow-600 transition">
+                        Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+        @empty
+        <p class="text-slate-400 col-span-3">Belum ada fasilitas tersedia.</p>
+        @endforelse
+    </div>
+
+    <!-- FORM BOOKING -->
+    <div id="formBooking" class="hidden bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 mt-6">
+        <h3 class="font-bold text-slate-800 text-xl mb-6">Form Peminjaman</h3>
+        <form action="/booking" method="POST" class="space-y-4">
+            @csrf
+            <div>
+                <label class="text-sm font-bold text-slate-600">Nama</label>
+                <input type="text" name="nama" value="{{ session('user_name') }}"
+                    class="w-full mt-1 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+            <div>
+                <label class="text-sm font-bold text-slate-600">NIM</label>
+                <input type="text" name="nim"
+                    class="w-full mt-1 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+            <div>
+                <label class="text-sm font-bold text-slate-600">Fasilitas / Ruangan</label>
+                <input type="text" name="fasilitas" id="inputFasilitas"
+                    class="w-full mt-1 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm font-bold text-slate-600">Tanggal Pinjam</label>
+                    <input type="date" name="tanggal_pinjam"
+                        class="w-full mt-1 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                </div>
+                <div>
+                    <label class="text-sm font-bold text-slate-600">Tanggal Kembali</label>
+                    <input type="date" name="tanggal_kembali"
+                        class="w-full mt-1 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                </div>
+            </div>
+            <div class="flex gap-4 pt-2">
+                <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition">
+                    Kirim Booking
+                </button>
+                <button type="button" onclick="tutupFormBooking()"
+                    class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-6 py-3 rounded-xl font-bold transition">
+                    Batal
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
             <!-- FORM BOOKING -->
             <div id="formBooking" class="hidden bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 mt-6">
                 <h3 class="font-bold text-slate-800 text-xl mb-6">Form Peminjaman</h3>

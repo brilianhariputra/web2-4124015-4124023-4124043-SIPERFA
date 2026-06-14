@@ -1,354 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPERFA - Sistem Peminjaman Tempat & Fasilitas</title>
-
+    <title>SIPERFA - Sistem Peminjaman Fasilitas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            color: #333;
-        }
-
-        /* TOP BAR */
-        .top-bar {
-            background: #1e3a8a;
-            color: white;
-            padding: 12px 5%;
-            font-size: 18px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            background: white;
-            padding: 20px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            color: #1e3a8a;
-            font-size: 32px;
-            font-weight: bold;
-            text-decoration: none;
-            flex: 1;
-        }
-
-        .search-container {
-            flex: 2;
-            margin: 0 40px;
-        }
-
-        .search-container form {
-            display: flex;
-        }
-
-        .search-container input {
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 18px;
-            border: 2px solid #1e3a8a;
-            border-radius: 8px 0 0 8px;
-            outline: none;
-        }
-
-        .btn-search {
-            background: #1e3a8a;
-            color: white;
-            border: none;
-            padding: 0 25px;
-            border-radius: 0 8px 8px 0;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            flex: 1;
-            text-align: right;
-            display: flex;
-            justify-content: flex-end;
-            gap: 30px;
-}
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1e3a8a;
-            font-weight: bold;
-            font-size: 18px;
-}
-        
-
-        /* HERO */
-        .hero {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-            color: white;
-            padding: 80px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .hero-text {
-            max-width: 60%;
-        }
-
-        .hero-text h1 {
-            font-size: 60px;
-            margin: 0;
-            line-height: 1.1;
-        }
-
-        .hero-text p {
-            font-size: 24px;
-            color: #e0e7ff;
-            margin: 20px 0 40px 0;
-        }
-
-        .btn-cta {
-            background: #fbbf24;
-            color: #1e3a8a;
-            padding: 18px 40px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 20px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-
-        /* CONTENT */
-        .content-section {
-            padding: 60px 5%;
-        }
-
-        .section-title {
-            font-size: 32px;
-            color: #1e3a8a;
-            margin-bottom: 30px;
-            border-left: 8px solid #fbbf24;
-            padding-left: 15px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .card-img {
-            height: 180px;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-        }
-
-        .card-info {
-            padding: 20px;
-        }
-
-        .card-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 22px;
-            color: #1e3a8a;
-        }
-
-        .card-info p {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .btn-book {
-            display: block;
-            text-align: center;
-            background: #2563eb;
-            color: white;
-            padding: 10px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-
-        /* DEV MODE */
-        .dev-mode {
-            padding: 40px 5%;
-            text-align: center;
-            background: #eee;
-        }
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
     </style>
 </head>
+<body class="bg-white text-slate-800">
 
-<body>
+    {{-- NAVBAR --}}
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-slate-900">SIPERFA</a>
 
-    <div class="top-bar">
-        Peminjaman Ruangan & Fasilitas  — Cek Ketersediaan Secara Real-Time!
-    </div>
+            <div class="hidden md:flex items-center bg-slate-100 rounded-2xl px-4 py-2 w-96">
+                <svg class="w-4 h-4 text-slate-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" placeholder="Cari ruangan atau fasilitas..." class="bg-transparent text-sm outline-none w-full text-slate-600">
+            </div>
 
-    <nav class="navbar">
-        <a href="/" class="logo">SIPERFA</a>
-
-        <div class="search-container">
-            <form action="/katalog" method="GET">
-                <input type="text" name="q" placeholder="Cari ruangan, proyektor, atau aula...">
-                <button type="submit" class="btn-search">CARI</button>
-            </form>
+            <div class="flex items-center gap-6">
+                <a href="/jadwal" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Jadwal</a>
+                <a href="/katalog" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Katalog</a>
+                <a href="/login" class="bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-slate-700 transition">Masuk</a>
+            </div>
         </div>
-
-    <div class="nav-links">
-        <a href="/jadwal">JADWAL</a>
-        <a href="/login">LOGIN</a> 
-       <a href="/katalog">KATALOG</a>
-    </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>
-                SISTEM PEMINJAMAN  <br>
-                <span style="color: #fbbf24;">RUANGAN & FASILITAS KAMPUS</span>
+    {{-- HERO --}}
+    <section class="max-w-7xl mx-auto px-6 pt-24 pb-20">
+        <div class="text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center bg-blue-50 text-blue-600 text-sm font-medium px-4 py-2 rounded-full mb-6">
+                ✨ Sistem Peminjaman Digital Kampus
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6">
+                Pinjam Ruangan &<br>
+                <span class="gradient-text">Fasilitas Kampus</span><br>
+                dengan Mudah
             </h1>
-
-            <p>
-                Cek jadwal ketersediaan ruangan dan fasilitas terlebih dahulu,
-                kemudian lakukan peminjaman dengan akun yang telah terdaftar.
+            <p class="text-lg text-slate-500 mb-10 leading-relaxed">
+                Cek ketersediaan, pilih jadwal, dan ajukan peminjaman ruangan serta fasilitas kampus secara online — cepat, mudah, dan transparan.
             </p>
-
-            <a href="#daftar-fasilitas" class="btn-cta">
-                    LIHAT DAFTAR
+            <div class="flex items-center justify-center gap-4">
+                <a href="/katalog" class="bg-slate-900 text-white font-semibold px-8 py-4 rounded-2xl hover:bg-slate-700 transition text-sm">
+                    Lihat Katalog →
                 </a>
-
-                <a href="/jadwal"
-                style="
-                display:inline-block;
-                margin-left:15px;
-                background:#16a34a;
-                color:white;
-                padding:18px 40px;
-                text-decoration:none;
-                font-weight:bold;
-                font-size:20px;
-                border-radius:10px;
-                ">
-                    LIHAT JADWAL
+                <a href="/jadwal" class="bg-slate-100 text-slate-700 font-semibold px-8 py-4 rounded-2xl hover:bg-slate-200 transition text-sm">
+                    Cek Jadwal
                 </a>
+            </div>
         </div>
 
-        <div style="font-size: 180px;">🏢</div>
-    </section>
-
-    <section class="content-section" id="daftar-fasilitas">
-        <h2 class="section-title">Ruangan & Fasilitas Terpopuler</h2>
-
-        <div class="grid-container">
-
-            <div class="card">
-                <div class="card-img" style="background-color: #e0e7ff;">🏫</div>
-
-                <div class="card-info">
-                    <h3>Aula Utama</h3>
-
-                    <p>
-                        Kapasitas 500 orang, Full AC, Sound System lengkap.
-                    </p>
-
-                    <a href="/katalog/aula" class="btn-book">
-                        Detail & Pinjam
-                    </a>
-                </div>
+        {{-- STATS --}}
+        <div class="grid grid-cols-3 gap-6 max-w-2xl mx-auto mt-20">
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-slate-900">30+</p>
+                <p class="text-sm text-slate-500 mt-1">Ruangan Tersedia</p>
             </div>
-
-            <div class="card">
-                <div class="card-img" style="background-color: #fef3c7;">💻</div>
-
-                <div class="card-info">
-                    <h3>Lab Komputer</h3>
-
-                    <p>
-                        30 Unit PC High-Spec, Internet Cepat, Ruang Nyaman.
-                    </p>
-
-                    <a href="/katalog/lab" class="btn-book">
-                        Detail & Pinjam
-                    </a>
-                </div>
+            <div class="text-center border-x border-slate-100">
+                <p class="text-4xl font-extrabold text-slate-900">24+</p>
+                <p class="text-sm text-slate-500 mt-1">Fasilitas & Peralatan</p>
             </div>
-
-            <div class="card">
-                <div class="card-img" style="background-color: #d1fae5;">🤝</div>
-
-                <div class="card-info">
-                    <h3>Ruang Rapat A</h3>
-
-                    <p>
-                        Kapasitas 15 orang, Proyektor, Papan Tulis Digital.
-                    </p>
-
-                    <a href="/katalog/rapat-a" class="btn-book">
-                        Detail & Pinjam
-                    </a>
-                </div>
+            <div class="text-center">
+                <p class="text-4xl font-extrabold text-slate-900">500</p>
+                <p class="text-sm text-slate-500 mt-1">Kapasitas Terbesar</p>
             </div>
-
-            <div class="card">
-                <div class="card-img" style="background-color: #ffedd5;">📽️</div>
-
-                <div class="card-info">
-                    <h3>Proyektor Portabel</h3>
-
-                    <p>
-                        EPSON 4K, include layar tripod, kabel HDMI 10m.
-                    </p>
-
-                    <a href="/katalog/proyektor" class="btn-book">
-                        Detail & Pinjam
-                    </a>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <div class="dev-mode">
-        <p style="font-size: 14px; color: #888;">
-            Quick Access (Dev Mode):
+    {{-- RUANGAN --}}
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex items-end justify-between mb-10">
+            <div>
+                <p class="text-sm font-semibold text-blue-600 mb-2">RUANGAN</p>
+                <h2 class="text-3xl font-bold text-slate-900">Ruangan Terpopuler</h2>
+            </div>
+            <a href="/katalog" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Lihat semua →</a>
+        </div>
 
-            <a href="/admin" style="color: #333; margin-left: 10px;">
-                Admin
-            </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @forelse($ruangan as $item)
+            <div class="card-hover bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+                <div class="h-40 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center text-6xl">
+                    {{ $item->emoji ?? '🏢' }}
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-slate-900 text-base mb-1">{{ $item->nama }}</h3>
+                    <p class="text-xs text-slate-400 mb-3">📍 {{ $item->lokasi }}</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-lg font-medium">👥 {{ $item->kapasitas }} org</span>
+                        <span class="text-xs font-semibold text-slate-700">Rp {{ number_format($item->tarif, 0, ',', '.') }}/jam</span>
+                    </div>
+                    <a href="/katalog" class="block text-center bg-slate-900 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-slate-700 transition">
+                        Detail & Pinjam
+                    </a>
+                </div>
+            </div>
+            @empty
+            <p class="text-slate-400 col-span-4">Belum ada ruangan.</p>
+            @endforelse
+        </div>
+    </section>
 
-            |
+    {{-- FASILITAS --}}
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex items-end justify-between mb-10">
+            <div>
+                <p class="text-sm font-semibold text-amber-500 mb-2">FASILITAS & PERALATAN</p>
+                <h2 class="text-3xl font-bold text-slate-900">Peralatan Tersedia</h2>
+            </div>
+            <a href="/katalog" class="text-sm font-semibold text-slate-500 hover:text-slate-900 transition">Lihat semua →</a>
+        </div>
 
-            <a href="/user" style="color: #7c3aed; margin-left: 10px;">
-                User
-            </a>
-        </p>
-    </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @forelse($fasilitas as $item)
+            <div class="card-hover bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+                <div class="h-40 bg-gradient-to-br from-amber-50 to-yellow-100 flex items-center justify-center text-6xl">
+                    {{ $item->emoji ?? '📦' }}
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-slate-900 text-base mb-1">{{ $item->nama }}</h3>
+                    <p class="text-xs text-slate-400 mb-4">📍 {{ $item->lokasi }}</p>
+                    <a href="/katalog" class="block text-center bg-amber-500 text-white text-xs font-semibold py-2.5 rounded-xl hover:bg-amber-600 transition">
+                        Detail & Pinjam
+                    </a>
+                </div>
+            </div>
+            @empty
+            <p class="text-slate-400 col-span-4">Belum ada fasilitas.</p>
+            @endforelse
+        </div>
+    </section>
+
+    {{-- CTA BANNER --}}
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <div class="bg-slate-900 rounded-3xl p-12 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Siap Meminjam Fasilitas?</h2>
+            <p class="text-slate-400 mb-8">Daftar akun sekarang dan mulai ajukan peminjaman dengan mudah.</p>
+            <div class="flex items-center justify-center gap-4">
+                <a href="/register" class="bg-white text-slate-900 font-semibold px-8 py-4 rounded-2xl hover:bg-slate-100 transition text-sm">
+                    Daftar Sekarang
+                </a>
+                <a href="/login" class="border border-slate-600 text-white font-semibold px-8 py-4 rounded-2xl hover:bg-slate-800 transition text-sm">
+                    Sudah Punya Akun
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- FOOTER --}}
+    <footer class="border-t border-slate-100 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <p class="text-sm text-slate-400">© 2026 SIPERFA. Sistem Peminjaman Fasilitas Kampus.</p>
+            <div class="text-xs text-slate-300">
+                <a href="/admin" class="hover:text-slate-500 transition">Admin</a>
+                <span class="mx-2">|</span>
+                <a href="/user" class="hover:text-slate-500 transition">User</a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

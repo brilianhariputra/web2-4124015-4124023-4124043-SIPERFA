@@ -5,21 +5,36 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(FasilitasSeeder::class);
+        $this->call(RuanganSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Akun Admin
+        DB::table('users')->insert([
+            'name'       => 'Administrator',
+            'email'      => 'admin@siperfa.com',
+            'password'   => Hash::make('admin123'),
+            'role'       => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Akun User Test
+        DB::table('users')->insert([
+            'name'       => 'User Test',
+            'email'      => 'user@siperfa.com',
+            'password'   => Hash::make('user123'),
+            'role'       => 'user',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }

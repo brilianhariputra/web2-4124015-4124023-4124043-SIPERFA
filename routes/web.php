@@ -18,7 +18,9 @@ use App\Http\Controllers\ProdukController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $ruangan   = DB::table('ruangan')->limit(4)->get();
+    $fasilitas = DB::table('fasilitas')->limit(4)->get();
+    return view('welcome', compact('ruangan', 'fasilitas'));
 });
 
 /*
@@ -100,9 +102,10 @@ Route::get('/admin', function () {
     $totalUser    = DB::table('users')->count();
     $bookings     = DB::table('bookings')->latest()->get();
     $fasilitas    = DB::table('fasilitas')->get();
+    $ruangan      = DB::table('ruangan')->get();
 
     return view('admin.dashboard', compact(
-        'totalBooking', 'menunggu', 'disetujui', 'totalUser', 'bookings', 'fasilitas'
+        'totalBooking', 'menunggu', 'disetujui', 'totalUser', 'bookings', 'fasilitas', 'ruangan'
     ));
 });
 
@@ -123,7 +126,10 @@ Route::get('/user', function () {
         ->latest()
         ->get();
 
-    return view('user.dashboard', compact('bookingUser'));
+    $ruangan   = DB::table('ruangan')->get();
+    $fasilitas = DB::table('fasilitas')->get();
+
+    return view('user.dashboard', compact('bookingUser', 'ruangan', 'fasilitas'));
 });
 
 /*
@@ -168,7 +174,6 @@ Route::post('/booking', function (Request $request) {
 /*
 |--------------------------------------------------------------------------
 | BOOKING - HAPUS, SETUJUI, TOLAK
-| ⚠️ Harus di atas Route::get('/booking/{id}') agar tidak bentrok
 |--------------------------------------------------------------------------
 */
 
@@ -202,7 +207,6 @@ Route::post('/booking/tolak/{id}', function ($id) {
     return redirect()->back()->with('success', 'Booking berhasil ditolak!');
 });
 
-// Route dinamis {id} di bawah
 Route::get('/booking/{id}', [RuanganController::class, 'booking'])->name('ruangan.booking');
 
 /*
