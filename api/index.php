@@ -1,16 +1,19 @@
 <?php
-// Paksa Environment
-putenv('APP_ENV=production');
-putenv('CACHE_DRIVER=array');
-putenv('SESSION_DRIVER=array');
-putenv('QUEUE_CONNECTION=sync');
+// Tentukan path ke /tmp agar Laravel tidak error saat menulis file
+define('LARAVEL_START', microtime(true));
+
+// Mengarahkan path storage ke /tmp
+$_ENV['APP_STORAGE'] = '/tmp';
+putenv('APP_STORAGE=/tmp');
+
+// Wajib: arahkan view ke /tmp
+putenv('VIEW_COMPILED_PATH=/tmp');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Gunakan App, tapi jangan manipulasi container 'view' secara manual
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Gunakan Http Kernel untuk memproses request
+// Penting: Pastikan kita menggunakan HTTP Kernel
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(

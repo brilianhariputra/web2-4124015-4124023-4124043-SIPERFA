@@ -1,4 +1,5 @@
 <?php
+$app->useStoragePath('/tmp');
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
