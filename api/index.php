@@ -6,24 +6,20 @@ $basePath = dirname(__DIR__);
 
 require_once $basePath . '/vendor/autoload.php';
 
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
-
-$app = Application::configure(basePath: $basePath)
+$app = \Illuminate\Foundation\Application::configure(basePath: $basePath)
     ->withRouting(
         web: $basePath . '/routes/web.php',
         commands: $basePath . '/routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {})
-    ->withExceptions(function (Exceptions $exceptions) {})
+    ->withMiddleware(function (\Illuminate\Foundation\Configuration\Middleware $middleware) {})
+    ->withExceptions(function (\Illuminate\Foundation\Configuration\Exceptions $exceptions) {})
     ->create();
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
+    $request = \Illuminate\Http\Request::capture()
 )->send();
 
 $kernel->terminate($request, $response);
