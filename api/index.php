@@ -1,19 +1,15 @@
 <?php
-// Tentukan path ke /tmp agar Laravel tidak error saat menulis file
-define('LARAVEL_START', microtime(true));
-
-// Mengarahkan path storage ke /tmp
-$_ENV['APP_STORAGE'] = '/tmp';
-putenv('APP_STORAGE=/tmp');
-
-// Wajib: arahkan view ke /tmp
-putenv('VIEW_COMPILED_PATH=/tmp');
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// Paksa agar sistem tidak menulis ke disk
+putenv('CACHE_DRIVER=array');
+putenv('VIEW_COMPILED_PATH=/tmp');
+putenv('SESSION_DRIVER=array');
+
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Penting: Pastikan kita menggunakan HTTP Kernel
+// Menjalankan aplikasi
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
