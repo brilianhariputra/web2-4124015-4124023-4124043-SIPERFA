@@ -1,10 +1,17 @@
 <?php
 
+define('LARAVEL_START', microtime(true));
+
 $basePath = dirname(__DIR__);
 
-echo "<pre>";
-echo "basePath: " . $basePath . "\n";
-echo "autoload exists: " . (file_exists($basePath . '/vendor/autoload.php') ? 'YES' : 'NO') . "\n";
-echo "bootstrap exists: " . (file_exists($basePath . '/bootstrap/app.php') ? 'YES' : 'NO') . "\n";
-echo "views exists: " . (file_exists($basePath . '/resources/views') ? 'YES' : 'NO') . "\n";
-echo "</pre>";
+require $basePath . '/vendor/autoload.php';
+
+$app = require $basePath . '/bootstrap/app.php';
+
+$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = \Illuminate\Http\Request::capture()
+)->send();
+
+$kernel->terminate($request, $response);
