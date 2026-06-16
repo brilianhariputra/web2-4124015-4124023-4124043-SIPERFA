@@ -2,9 +2,20 @@
 
 define('LARAVEL_START', microtime(true));
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+$basePath = dirname(__DIR__);
 
-$app = require_once dirname(__DIR__) . '/bootstrap/app.php';
+require_once $basePath . '/vendor/autoload.php';
+
+// Override basePath SEBELUM Application dibuat
+$app = Application::configure(basePath: $basePath)
+    ->withRouting(
+        web: $basePath . '/routes/web.php',
+        commands: $basePath . '/routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function ($middleware) {})
+    ->withExceptions(function ($exceptions) {})
+    ->create();
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
