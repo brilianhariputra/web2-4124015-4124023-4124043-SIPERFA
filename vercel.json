@@ -1,11 +1,11 @@
-$content = [System.Text.Encoding]::UTF8.GetBytes('{
+{
     "version": 2,
-    "framework": null,
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.7.4"
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "vercel-php@0.7.4"
         }
-    },
+    ],
     "routes": [
         {
             "src": "/(.*)",
@@ -17,6 +17,4 @@ $content = [System.Text.Encoding]::UTF8.GetBytes('{
         "APP_DEBUG": "true",
         "LOG_CHANNEL": "stderr"
     }
-}')
-
-[System.IO.File]::WriteAllBytes("vercel.json", $content)
+}
