@@ -1,20 +1,15 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+define('LARAVEL_START', microtime(true));
 
-$app = require_once __DIR__ . '/../bootstrap/app.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-// --- JALUR PINTAS: DAFTARKAN VIEW SECARA MANUAL ---
-// Ini memaksa Laravel untuk mengenali 'view' agar tidak terjadi BindingResolutionException
-$app->register(Illuminate\View\ViewServiceProvider::class);
-$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
-// --------------------------------------------------
+$app = require_once dirname(__DIR__) . '/bootstrap/app.php';
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
-);
+)->send();
 
-$response->send();
 $kernel->terminate($request, $response);
