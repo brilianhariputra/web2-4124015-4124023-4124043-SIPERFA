@@ -2,14 +2,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Paksa agar sistem tidak menulis ke disk
-putenv('CACHE_DRIVER=array');
-putenv('VIEW_COMPILED_PATH=/tmp');
-putenv('SESSION_DRIVER=array');
-
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Menjalankan aplikasi
+// --- JALUR PINTAS: DAFTARKAN VIEW SECARA MANUAL ---
+// Ini memaksa Laravel untuk mengenali 'view' agar tidak terjadi BindingResolutionException
+$app->register(Illuminate\View\ViewServiceProvider::class);
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+// --------------------------------------------------
+
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
