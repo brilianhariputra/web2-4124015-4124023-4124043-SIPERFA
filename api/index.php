@@ -2,13 +2,13 @@
 
 define('LARAVEL_START', microtime(true));
 
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
-
 $basePath = dirname(__DIR__);
 
 require_once $basePath . '/vendor/autoload.php';
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
 
 $app = Application::configure(basePath: $basePath)
     ->withRouting(
