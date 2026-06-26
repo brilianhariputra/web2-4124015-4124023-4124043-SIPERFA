@@ -26,7 +26,7 @@
         @csrf
 
         <div>
-            <label class="block font-bold text-white mb-2">Email
+            <label class="block font-bold text-white mb-2">
                 Email
             </label>
 
@@ -39,7 +39,7 @@
         </div>
 
         <div>
-            <label class="block font-bold text-white mb-2">Password
+            <label class="block font-bold text-white mb-2">
                 Password
             </label>
 
