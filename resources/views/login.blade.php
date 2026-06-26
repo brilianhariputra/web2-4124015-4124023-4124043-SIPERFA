@@ -8,17 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-br from-blue-900 to-blue-500 min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/kampus.jpg'); background-size: cover; background-position: center;">
 
-<div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10">
+<div class="rounded-2xl w-full max-w-md p-10" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
 
     <div class="text-center mb-8">
-        <h1 class="text-4xl font-extrabold text-blue-900">
+       <h1 class="text-4xl font-extrabold text-white">
             SIPERFA
         </h1>
 
-        <p class="text-gray-500 mt-2">
-            Sistem Peminjaman Fasilitas
+        <p class="text-white mt-2">
+            Sistem Peminjaman Fasilitas & Ruangan
         </p>
     </div>
 
@@ -26,7 +26,7 @@
         @csrf
 
         <div>
-            <label class="block font-bold text-gray-700 mb-2">
+            <label class="block font-bold text-white mb-2">Email
                 Email
             </label>
 
@@ -34,12 +34,12 @@
                 type="email"
                 name="email"
                 placeholder="Masukkan email"
-                class="w-full border-2 border-gray-200 rounded-xl px-4 py-3"
+                class="w-full rounded-xl px-4 py-3 bg-transparent border border-white text-white placeholder-white"
             >
         </div>
 
         <div>
-            <label class="block font-bold text-gray-700 mb-2">
+            <label class="block font-bold text-white mb-2">Password
                 Password
             </label>
 
@@ -47,28 +47,31 @@
                 type="password"
                 name="password"
                 placeholder="Masukkan password"
-                class="w-full border-2 border-gray-200 rounded-xl px-4 py-3"
+                class="w-full rounded-xl px-4 py-3 bg-transparent border border-white text-white placeholder-white"
+            >
             >
         </div>
 
         <button
             type="submit"
-            class="w-full bg-blue-700 hover:bg-blue-800 text-white text-center py-3 rounded-xl font-bold transition">
-            LOGIN
+            class="w-full text-center text-white font-bold text-lg py-3 border-b border-white hover:opacity-70 transition">
+            Login →
+
         </button>
 
     </form>
 
     <!-- TOMBOL DAFTAR -->
     <div class="mt-5">
-        <a href="/register"
-           class="block w-full bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded-xl font-bold transition">
-            BUAT AKUN BARU
+       <a href="/register"
+            class="block w-full text-center text-white font-bold text-lg py-3 border-b border-white hover:opacity-70 transition">
+            Buat Akun →
+
         </a>
     </div>
 
     <div class="mt-6 text-center">
-        <a href="/" class="text-blue-700 font-bold hover:underline">
+        <a href="/" class="text-white mt-2 font-bold hover:underline">
             ← Kembali ke Halaman Awal
         </a>
     </div>
