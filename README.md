@@ -8,6 +8,12 @@ Program Studi : Sistem Informasi
 
 ---
 
+- [ahmad ibnu muttohari](https://github.com/Ahmadibnumuthohhari4124023/web2-4124023-ahmadibnumuthohhari1.git) (NIM: 4124023)
+
+- [zulki mujitahid](https://github.com/zulki07) (NIM: 4124043)
+
+
+
 ## Screenshot Halaman Welcome
 
 ![Screenshot Welcome](screenshot-welcome.png)
