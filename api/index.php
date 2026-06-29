@@ -1,8 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 define('LARAVEL_START', microtime(true));
 
 if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php')) {
@@ -19,7 +16,7 @@ $app->useStoragePath('/tmp/storage');
 // Buat folder yang dibutuhkan di /tmp
 $dirs = [
     '/tmp/storage/framework/views',
-    '/tmp/storage/framework/cache',
+    '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
     '/tmp/storage/logs',
 ];
