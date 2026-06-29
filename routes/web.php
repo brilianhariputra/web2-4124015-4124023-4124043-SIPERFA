@@ -11,11 +11,7 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\ProdukController;
 
-/*
-|--------------------------------------------------------------------------
-| WEB ROUTES
-|--------------------------------------------------------------------------
-*/
+
 
 Route::get('/', function () {
     $ruangan   = DB::table('ruangan')->limit(4)->get();
